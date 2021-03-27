@@ -3,7 +3,7 @@ const mongoose=require('mongoose');
 const morgan=require('morgan');
 const bodyParser=require('body-parser');
 const cors=require('cors');
-const fs=require('fs');
+const {readdirSync}=require('fs');
 require('dotenv').config();
 
 //import routes
@@ -29,7 +29,7 @@ app.use(cors());
 
 //routes middlwares
 //app.use('/api',authRoutes);
-fs.readdirSync('./routes').map((r)=>app.use('/api',require('./routes/'+r)));
+readdirSync('./routes').map((r)=>app.use('/api',require('./routes/'+r)));
 
 
 //port 

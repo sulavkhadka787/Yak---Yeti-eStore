@@ -3,7 +3,8 @@ import {auth, googleAuthProvider} from '../../firebase';
 import {toast} from 'react-toastify';
 import {useDispatch,useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-
+import {createOrUpdateUser} from '../../functions/auth';
+    
 const Login=({history})=>{
     
     const [email,setEmail]=useState('');
@@ -18,7 +19,15 @@ const Login=({history})=>{
         if(user && user.token){
             history.push('/')
         }
-    },[user])
+    },[user,dispatch,history])
+
+    const roleBasedRedirect=(res)=>{
+        if(res.data.role==="admin"){
+            history.push('/admin/dashboard');
+        }else{
+            history.push('/user/history');
+        }
+    }
 
     const handleSubmit=async(e)=>{
        e.preventDefault();
@@ -30,19 +39,30 @@ const Login=({history})=>{
        setLoading(true);
        try{
             const result=await auth.signInWithEmailAndPassword(email,password);
-            //console.log('login-result',result);
+            console.log('login-result',result);
             const {user}=result;
+            
             const idTokenResult=await user.getIdTokenResult();
-            //console.log('login-token',idTokenResult);
-            dispatch({
-                type:'LOGGED_IN_USER',
-                payload:{
-                    name:user.displayName,
-                    email:user.email,
-                    token:idTokenResult.token
-                }
-            });
-            history.push('/');
+            
+
+            createOrUpdateUser(idTokenResult.token)
+                .then((res)=>{
+                    dispatch({
+                        type:'LOGGED_IN_USER',
+                        payload:{
+                            name:res.data.name,
+                            email:res.data.email,
+                            token:idTokenResult.token,
+                            role:res.data.role,
+                            _id:res.data._id
+                        }
+                    });
+                    roleBasedRedirect(res);
+                })
+                .catch((err)=>console.log('createlogin-err',err.message));
+                history.push('/');
+           
+            
        }catch(error){
             toast.error(error.message);
             console.log('login-error',error);
@@ -56,13 +76,23 @@ const Login=({history})=>{
                 console.log('google-login-result',result);
                 const {user}=result;
                 const idTokenResult=await user.getIdTokenResult();
-                dispatch({
-                    type:'LOGGED_IN_USER',
-                    payload:{
-                        email:user.email,
-                        token:idTokenResult.token
-                    }
-                });
+                
+                createOrUpdateUser(idTokenResult.token)
+                .then((res)=>{
+                    dispatch({
+                        type:'LOGGED_IN_USER',
+                        payload:{
+                            name:res.data.name,
+                            email:res.data.email,
+                            token:idTokenResult.token,
+                            role:res.data.role,
+                            _id:res.data._id
+                        }
+                    });
+                    roleBasedRedirect(res);
+                })
+                .catch((err)=>console.log('createlogin-err',err.message));
+                
                 history.push('/');
             }).catch((err)=>{
                 toast.error(err.message);

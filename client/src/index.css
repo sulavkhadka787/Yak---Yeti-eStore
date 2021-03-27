@@ -197,5 +197,78 @@ a:hover{
     
 }
 
+/* ====loading-spinner */
 
+.loading-spinner{
+    display: flex;
+    flex-direction: column;    
+    align-items: center;
+    justify-content: center;
+    font-size:2rem;
+    color:red;
+    height:100vh;
+    padding:10px 10px;
+}
 
+/* ===user history==== */
+
+.user-history{
+    max-width:90%;
+    margin:auto 5px;
+    display: flex;
+    height:100vh;
+    margin-top:10px;
+
+}
+
+.sidenav{
+    flex:1;
+    background: linear-gradient(260deg,#2376ae 0%, #16222A 100%);
+}
+
+.content{
+    flex:5;
+}
+
+.user-history li{
+    list-style-type: none;
+    color:white;
+    font-size: large;
+    padding-top:10px;
+    padding-bottom:5px;
+    padding-left:20px;
+    cursor: pointer;
+}
+
+.user-history li:hover{
+    background:grey;
+}
+
+@media screen and (max-width:768px){
+
+    .user-history{
+        
+        margin:auto 5px;
+        display: flex;
+        flex-direction: column;
+        height:100vh;
+        margin-top:10px;
+        max-width: 100%;
+    
+    }
+
+    .user-history .wrap{
+       justify-content: right;
+    
+    }
+    .user-history .login-form{
+        max-width:250px;
+        top:0;
+    }
+    
+}
+
+/* ====user password */
+.password-wrap.wrap{
+    margin-top:20px;
+}

@@ -1,7 +1,8 @@
 import React, { useEffect,useState } from 'react';
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase';
-import {useSelector} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
+import {createOrUpdateUser} from '../../functions/auth';
 
 const RegisterComplete=({history})=>{
 
@@ -12,6 +13,8 @@ const RegisterComplete=({history})=>{
 
     const {user}=useSelector((state)=>({...state}));
 
+    const dispatch=useDispatch();
+
 
     useEffect(()=>{
         if(user && user.token){
@@ -19,8 +22,8 @@ const RegisterComplete=({history})=>{
             return;
         }
         setEmail(window.localStorage.getItem('emailForRegistration'));
-        console.log(window.location);
-    },[user]);
+        //console.log(window.location);
+    },[history]);
 
     const handleSubmit=async(e)=>{
         e.preventDefault();
@@ -42,24 +45,36 @@ const RegisterComplete=({history})=>{
                 email,
                 window.location.href
             );
-            console.log('sigininwithemaillink===result',result);
+            //console.log('sigininwithemaillink===result',result);
 
             if(result.user.emailVerified){
                 window.localStorage.removeItem('emailForRegistration');
-                let user=auth.currentUser;
+                let createdUser=auth.currentUser;
 
-                await user.updatePassword(password);
-                await user.updateProfile({
+                await createdUser.updatePassword(password);
+                await createdUser.updateProfile({
                     displayName:userName
                 });
 
-                const idTokenResult=await user.getIdTokenResult();
+                const idTokenResult=await createdUser.getIdTokenResult();
 
-                console.log("user",user,"idtokentresult",idTokenResult);
+                console.log("createdUser",createdUser,"idtokentresult",idTokenResult);
 
-                //history.push('/');
+                createOrUpdateUser(idTokenResult.token)
+                .then((res)=>{
+                    toast.success('Registration successfull,Please login');
+                    dispatch({
+                        type:'LOGOUT',
+                        payload:null
+                    });
+                    history.push('/login')
+                })
+                .catch((err)=>console.log('createlogin-err',err.message));
+                
+                
 
             }
+            
         }catch(error){
             console.log(error);
             toast.error(error.message);

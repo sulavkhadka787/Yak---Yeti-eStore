@@ -2,10 +2,15 @@ const express=require('express');
 
 const router=express.Router();
 
-router.get('/create-or-update-user',(req,res)=>{
-    res.json({
-        'data':'This is create and update user Api'
-    })
-})
+//import controller
+const {createOrUpdateUser,currentUser}=require('../controllers/auth.js');
+
+//middlwares
+const {authCheck,adminCheck}=require('../middlewares/auth');
+
+router.post('/create-or-update-user',authCheck,createOrUpdateUser);
+router.post('/current-user',authCheck,currentUser);
+router.post('/current-admin',authCheck,adminCheck,currentUser);
+
 
 module.exports=router;
