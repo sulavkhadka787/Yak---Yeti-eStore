@@ -136,6 +136,7 @@ a:hover{
     cursor: pointer;
     color:rgba(255,255,255,0.8);
     font-size:24px;
+    
 }
 
 .main-nav{
@@ -244,7 +245,145 @@ a:hover{
     background:grey;
 }
 
+.admin-container{
+    display: flex;
+    height:auto;
+    margin:10px 20px;
+}
+
+.admin-nav{
+    height:auto;
+    width:200px;
+    background: linear-gradient(260deg,#2376ae 0%, #16222A 100%);
+}
+
+.admin-sidenav{
+    flex:1;
+}
+
+.main-content{
+    flex:4;
+    height:auto;
+}
+
+.admin-nav li{
+    list-style-type: none;
+    font-size: large;
+    padding-top:10px;
+    padding-bottom:5px;
+    padding-left:20px;
+    cursor: pointer;
+}
+
+.admin-nav li a{
+    color:white;
+    text-decoration: none;
+}
+
+.admin-nav li:hover{
+    background:grey;
+}
+
+
+/* ====user password */
+.password-wrap.wrap{
+    margin-top:20px;
+}
+
+/* ===footer=== */
+.footer{
+    position: fixed;
+    bottom:1px;
+    margin:5px 10px;
+    height:50px;
+    background-color: black;
+    text-align: center;
+    color:white;
+    width:100%;
+}
+
+/* =======catgory create form=== */
+.category-create-form{
+    display:flex;
+    flex-direction:column;
+    margin:10px 10px;
+}
+
+.category-create-form label{
+    display: block;
+    margin-top:10px;
+}
+
+.category-create-form input{
+    width:50%;
+    padding:10px;
+    border-radius:10px;
+    outline: none;
+    margin-top:10px;
+    font-size:20px;
+    letter-spacing: 2px;
+}
+
+.category-create-form .btn-cat{
+    display: block;
+    padding:10px;
+    border-radius:10px;
+    margin-top:20px;
+    width:20%;
+    background:linear-gradient(260deg,#2376ae 0%, #16222A 100%);
+    color:white;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+.category-create-form .btn-cat:hover{
+    background:linear-gradient(260deg,#16222A 0%, #2376ae 100%);
+}
+
+/* ====all categories==== */
+
+.all-categories{
+    padding-left:10px;
+}
+.all-categories-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width:50%;
+    margin:10px;
+    background:silver;
+    padding:10px 10px;
+    border-radius:5px;
+}
+
+.cat-delete-edit .cat-delete{
+    padding:5px 10px;
+    margin-right:20px;
+    background: red;
+    color:white;
+    border-radius:5px;
+    cursor: pointer;
+    font-size:15px;
+    outline: none;
+}
+
+.cat-delete-edit .cat-edit{
+    text-decoration: none;
+    color:white;
+    background:black;
+    padding:5px 20px;
+    border-radius:5px;
+    cursor: pointer;
+    font-size:15px;
+}
+
+
 @media screen and (max-width:768px){
+
+    .login-form{
+      width:350px;
+    }
 
     .user-history{
         
@@ -265,10 +404,58 @@ a:hover{
         max-width:250px;
         top:0;
     }
+
+    .admin-container{
+        display: flex;
+        flex-direction:column;
+        width:90%;
+        height:auto;
+        justify-content: center;
+    }
+
+    .admin-nav{
+        width:100%;
+        padding-bottom: 0;
+        
+    }
+
+    .admin-nav-main{
+        display: none;
+    }
+
+    .admin-nav-main-active{
+        display: block;
+    }
+
+    .category-create-form input{
+        width:90%;
+    }
+
+    .category-create-form .btn-cat{
+        width:50%;
+    }
+
+    .cat-name{
+        text-align: center;
+        font-size:20px;
+    }
+
+    .all-categories-list{
+        display: flex;
+        flex-direction: column;
+        width:90%;
+    }
+
+    .cat-delete-edit{
+        display: flex;
+        justify-content: space-between;
+        font-size:15px;
+    }
+
+    
+    .footer{
+        display: none;
+    }
     
 }
 
-/* ====user password */
-.password-wrap.wrap{
-    margin-top:20px;
-}

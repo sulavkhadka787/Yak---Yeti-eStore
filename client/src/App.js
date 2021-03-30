@@ -12,6 +12,8 @@ import History from './pages/user/History';
 import UserRoute from './components/routes/UserRoute';
 import AdminRoute from './components/routes/AdminRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import CategoryCreate from './pages/admin/category/CategoryCreate';
+import CategoryUpdate from './pages/admin/category/CategoryUpdate';
 
 import {auth} from './firebase';
 import {useDispatch} from 'react-redux';
@@ -59,6 +61,9 @@ const App=()=> {
         <Route exact path="/forgot/password" component={ForgotPassword}/>
         <UserRoute exact path="/user/history" component={History}/>
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
+        <AdminRoute exact path="/admin/category" component={CategoryCreate} />
+        <AdminRoute exact path="/admin/category" component={CategoryCreate} />
+        <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
     </Switch>
     </>
     

@@ -7,6 +7,7 @@ import {useSelector} from 'react-redux';
 
 const Nav=()=>{
     const [navToggle, setNavToggle]=useState(false);
+    const[dashboardColor, setDashBoardColor]=useState(false);
 
     const dispatch=useDispatch();
     const history=useHistory();
@@ -15,7 +16,16 @@ const Nav=()=>{
 
     useEffect(()=>{
         //console.log('redux=user',user);
-    },[user])
+        console.log('his',history.location.pathname);
+        const aa=history.location.pathname.split('dashboard')[0];
+        console.log('aaa',aa);
+        if(history.location.pathname==="/admin/dashboard"){
+           
+            
+            setDashBoardColor(true);
+        }
+        console.log('dashbo',dashboardColor);
+    },[user,dashboardColor])
 
     const handleToggle=()=>{
         setNavToggle(!navToggle);
@@ -32,7 +42,7 @@ const Nav=()=>{
     return(
         <>
                 <nav className="navbar">
-                    <span className="navbar-toggle" id="js-navbar-toggle" onClick={handleToggle}>
+                    <span className="navbar-toggle"  onClick={handleToggle}>
                         <i className="fas fa-bars"></i>
                     </span>
                     <Link to="/" className="logo">Yak & Yeti</Link>
@@ -50,9 +60,29 @@ const Nav=()=>{
                         <li>
                             <Link to="/" className="nav-links">Products</Link>
                         </li>
-                        <li>
-                            <Link to="/" className="nav-links">About Us</Link>
-                        </li>
+                        {user && user.role==="admin" ? (
+                            <li >
+                                <Link 
+                                    to="/admin/dashboard" 
+                                    className="nav-links" 
+                                    style={{
+                                            color:dashboardColor ? "#FFD700" :"rgba(255,255,255,0.7)",
+                                            fontWeight:dashboardColor ? "900":"normal"
+                                             }}
+                                    >
+                                    DashBoard
+                                    </Link>
+                            </li>
+                        ):( user && user.role==="subscriber" ? (
+                            <li>
+                                <Link to="/user/history" className="nav-links">Account</Link>
+                            </li>
+                        ):(<li>
+                                <Link to="/" className="nav-links">About Us</Link>
+                            </li>)
+                            
+                        )}
+                        
                         <li>
                         <Link to="/" className="nav-links">Contact Us</Link>
                         </li>
