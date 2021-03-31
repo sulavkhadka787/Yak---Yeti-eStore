@@ -23,6 +23,7 @@ const AdminNav=()=>{
                             
                             <li><Link className="admin-links" to="/admin/dashboard">DashBoard</Link></li>
                             <li><Link className="admin-links" to="/admin/category">Category</Link></li>
+                            <li><Link className="admin-links" to="/admin/sub">Sub-Category</Link></li>
                             <li><Link className="admin-links" to="/admin/product">Product</Link></li>
                             <li><Link className="admin-links" to="/admin/products">Products</Link></li>
                             <li><Link className="admin-links" to="/admin/coupon">Coupon</Link></li>
