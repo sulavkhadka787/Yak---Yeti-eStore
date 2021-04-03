@@ -257,6 +257,16 @@ a:hover{
     background: linear-gradient(260deg,#2376ae 0%, #16222A 100%);
 }
 
+.admin-nav .logo{
+    margin-bottom:10px;
+    font-weight: 900;
+}
+
+.fa-bars{
+    margin-top:10px;
+    margin-right: 10px;
+    
+}
 .admin-sidenav{
     flex:1;
 }
@@ -391,6 +401,30 @@ a:hover{
     justify-content: center;
 }
 
+/* SUB-CATEGORY CHECKBOXES */
+
+.sub-cat{
+    padding:10px 10px;
+    border:1px solid black;
+    width:50%;
+    margin-top:10px;
+    border-radius: 10px;
+}
+.checkbox-div {
+    width:50%;
+}
+
+.checkbox-div input{
+    padding:0;
+    width:auto;
+    margin-left:20px;
+    margin-right:10px;
+}
+.checkbox-div  label{
+    display: inline-block;
+}
+
+
 
 @media screen and (max-width:768px){
 
@@ -470,6 +504,22 @@ a:hover{
         text-overflow: ellipsis;
     }
 
+    .sub-cat{
+        width:100%;
+    }
+    .sub-cat .checkbox-div{
+        width:100%;
+    }
+
+    .checkbox-div input{
+        padding:0;
+        width:auto;
+        margin-left:20px;
+        margin-right:10px;
+    }
+    .checkbox-div  label{
+        display: inline-block;
+    }
     
     .footer{
         display: none;

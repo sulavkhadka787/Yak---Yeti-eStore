@@ -1,37 +1,52 @@
-const express=require('express');
-const mongoose=require('mongoose');
-const morgan=require('morgan');
-const bodyParser=require('body-parser');
-const cors=require('cors');
-require('dotenv').config();
+import React,{useState} from 'react';
 
-//app
-const app=express();
+const initialState={
+    title:'glasses',
+    subs:[],   
+}
 
-//db
-mongoose.connect(process.env.DATABASE,{
-    useNewUrlParser:true,
-    useCreateIndex:true,
-    useFindAndModify:true
-})
-.then(()=>console.log('DB CONNECTED ###'))
-.catch((err)=>console.log('DB CONNECTION ERR !!!!',err))
+const subarray=['apple','banana','orange']
 
-//middlewares
-app.use(morgan('dev'));
-app.use(bodyParser.json({limit:"2mb"}));
-app.use(cors());
+const ProductCreate=()=>{
 
-//route
-app.get('/api',(req,res)=>{
-    res.json({
-        data:'get request for node api'
-    })
-});
+    const [values,setValues]=useState(initialState);
+    const[selectedValues,setSelectedValues]=useState([]);
 
-//port 
-const port =process.env.PORT || 8000;
+    useEffect(()=>{
 
-app.listen(port, ()=>console.log(`SERVER IS RUNNING ON PORT ${port}`));
+    },[selectedValues])
 
 
+    const handleSubCatChange=(checkedName)=>{
+        if(selectedValues.includes(checkedName)){
+           setSelectedValues(selectedValues.filter((c)=> c!=(checkedName)))
+        }else{
+            setSelectedValues([...selectedValues,checkedName])
+        }
+    
+        setValues({...values,subs:selectedValues})
+        console.log('0000selected values',selectedValues);
+        console.log('0001sub-values',values.subs);
+    }
+
+
+    {subarray.map((s)=>
+    <div key={index} >
+        {console.log('0002checkbox-selecvalues',selectedValues)}
+          <input type="checkbox" 
+                 value={s} 
+                 onChange={()=>handleSubCatChange(s)}
+     />
+    </div>
+    
+    )}
+
+    return(
+        <>
+        {JSON.stringify(values.subs)} 
+        {JSON.stringify(selectedValues)}
+        </>
+    )
+
+}
+ 

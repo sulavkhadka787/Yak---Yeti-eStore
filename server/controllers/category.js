@@ -1,4 +1,5 @@
 const Category=require('../models/Category');
+const Sub=require('../models/sub');
 const slugify=require('slugify');
 
 exports.create=async(req,res)=>{
@@ -43,4 +44,28 @@ exports.remove=async(req,res)=>{
     }catch(err){
         res.status(400).send("Category Delete request failed=");
     }
+}
+
+// exports.getSubs=(req,res)=>{
+//     console.log('getsubs-id',req.params._id);
+//     Sub.find({parent:req.params._id}).exec((err,subs)=>{
+//         if(err){
+//             console.log('get-subs-err',err);
+//         }
+//         console.log('category-subs',subs);
+//         res.json(subs);  
+//     })
+
+// }
+
+exports.getSubs=(req,res)=>{
+    console.log('getsubs-id',req.params._id);
+    Sub.find({parent:req.params._id}).exec((err,subs)=>{
+        if(err){
+            console.log(err);
+        }
+        console.log('get-subs-controller',subs);
+        res.json(subs);
+    })
+    
 }

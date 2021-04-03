@@ -7,7 +7,7 @@ const AdminDashboard=()=>{
     return(
         <>
         <div className="admin-container">
-            <div classname="admin-sidenav">
+            <div className="admin-sidenav">
                 <AdminNav/> 
             </div>
             
