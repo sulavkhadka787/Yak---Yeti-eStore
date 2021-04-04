@@ -1,5 +1,9 @@
 import React from 'react';
 import CheckBox from '../CheckBoxes';
+import Resizer from 'react-image-file-resizer';
+import axios from 'axios';
+import {useSelector} from 'react-redux';
+import {toast} from 'react-toastify';
 
 const ProductCreateForm=({handleChange,
     handleSubmit,
@@ -11,7 +15,7 @@ const ProductCreateForm=({handleChange,
     values,
     setValues,
     selectedValues,
-    setSelectedValues,handleSubCatChange})=>{
+    setSelectedValues,handleSubCatChange,loading,setLoading})=>{
 
     //destructure
     const{
@@ -28,12 +32,90 @@ const ProductCreateForm=({handleChange,
         brand
 
     } = values;
+
+    const {user}=useSelector((state)=>({...state}));
+
+    const fileUploadAndResize=(e)=>{
+        //console.log('fileupload',e.target.files[0]);
+        let files=e.target.files;
+        let allUploadedFiles=values.images;
+
+        if(files){
+            setLoading(true);
+            for(let i=0;i<files.length;i++){
+                Resizer.imageFileResizer(files[i],720,720,'JPEG',100,0,(uri)=>{
+                    //console.log(uri);
+                    axios.post(
+                        `${process.env.REACT_APP_API}/uploadimages`,
+                         {image:uri},
+                         {headers:{authtoken: user ? user.token :""}})
+                    .then(res=>{
+                        console.log('IMAGE UPLOAD RES-DATA',res);
+                        setLoading(false);
+                        allUploadedFiles.push(res.data);
+                        setValues({...values,images:allUploadedFiles})
+                    })
+                    .catch(err=>{
+                        setLoading(false);
+                        console.log('CLOUDINARY UPLOAD ERR')
+                    })
+                },"base64");
+            }
+        }
+    }
+
+    const handleImageRemove=(public_id)=>{
+        console.log('image-id',public_id);
+        setLoading(true);
+        axios.post(`${process.env.REACT_APP_API}/removeimages`,
+            {public_id},
+            {headers:{authtoken:user ? user.token:''}}
+        ).then((res)=>{
+            console.log('image-delete-res',res);
+            setLoading(false);
+            const {images}=values;
+            let filteredImages=images.filter((item)=>{
+                return item.public_id !=public_id
+            })
+            setValues({...values,images:filteredImages})
+        }).catch((err)=>{
+            console.log('image-delete-err',err);
+            toast.error('image deletion failed');
+            setLoading(false);
+        })
+
+    }
+    
+
     return(
         <>
-        
+        {JSON.stringify(values.images)}
             <form onSubmit={handleSubmit}>
-                    <div>
+                {values.images.length>0 &&
+                    <div className="product-img-div-container">
+                    {loading ? (<p>Loading...</p>):(
                         
+                            values.images.map((image)=>
+                                
+                                   <div key={image.public_id} className="product-img-div">
+                                        <img  className="product-img" src={image.url} />
+                                        <span className="img-cross" onClick={()=>handleImageRemove(image.public_id)}>
+                                            <i className="fas fa-times"></i>
+                                        </span>
+                                    </div>
+                                    
+                               
+                            )
+                    )}
+                        
+                    </div>
+                }
+                    <div className="images-div">
+                    <label>Upload Images
+                        <input type="file" multiple accept="images/*" onChange={fileUploadAndResize} hidden/>
+                    </label>
+                    </div>
+                    <div>
                         <input 
                             type="text" 
                             name="title"
@@ -42,6 +124,7 @@ const ProductCreateForm=({handleChange,
                             onChange={handleChange}
                         />
                     </div>
+
                     <div>
                         
                         <input 

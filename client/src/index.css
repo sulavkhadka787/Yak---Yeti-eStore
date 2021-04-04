@@ -424,7 +424,49 @@ a:hover{
     display: inline-block;
 }
 
+/* upload images */
+.product-img-div-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+.images-div{
+    border: 2px solid black;
+    padding-bottom:10px;
+    width:50%;
+    border-radius:10px;
+    font-weight: 600;
+}
 
+.images-div label,input{
+    cursor: pointer;
+}
+.product-img{
+    height:100px;
+    width:100px;
+   border-radius: 40%;
+    
+}
+
+.product-img-div{
+    position: relative;
+    margin:0 10px;
+}
+
+.img-cross{
+    position: absolute;
+    top:5px;
+    left:5px;
+    font-size:10px;
+    background:red;
+    padding:3px 6px;
+    opacity:0.7;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.img-cross:hover{
+    opacity:1;
+}
 
 @media screen and (max-width:768px){
 
@@ -519,6 +561,10 @@ a:hover{
     }
     .checkbox-div  label{
         display: inline-block;
+    }
+
+    .images-div{
+        width:90%;
     }
     
     .footer{

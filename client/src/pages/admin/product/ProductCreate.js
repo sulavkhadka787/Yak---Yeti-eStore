@@ -28,6 +28,7 @@ const ProductCreate=()=>{
     const [showSub,setShowSub]=useState(false);
     const [cboxes, setCboxes]=useState([]);
     const[selectedValues,setSelectedValues]=useState([]);
+    const [loading,setLoading]=useState(false);
 
     const{
         title,
@@ -99,9 +100,9 @@ const ProductCreate=()=>{
     const handleSubCatChange = (checkedName) => {
         
         if (selectedValues.includes(checkedName)) {
-         setSelectedValues(selectedValues.filter((c) => c !== checkedName));
+         setSelectedValues(prev=>prev.filter((c) => c !== checkedName));
         } else {
-          setSelectedValues([...selectedValues, checkedName]);
+          setSelectedValues(prev=>[...prev, checkedName]);
         }
         
       };
@@ -110,14 +111,12 @@ const ProductCreate=()=>{
 
     return(
         <>
-
-        {JSON.stringify(values.category)}
-        {JSON.stringify(values.subs)}
-        {JSON.stringify(selectedValues)}
+            
             <div className="admin-container">
                 <div >
                     <AdminNav/> 
                 </div>
+                
 
                 <div className="main-content">
                     <div className="category-create-form">
@@ -137,6 +136,8 @@ const ProductCreate=()=>{
                             selectedValues={selectedValues}
                             setSelectedValues={setSelectedValues}
                             handleSubCatChange={handleSubCatChange}
+                            loading={loading}
+                            setLoading={setLoading}
                         /> 
                         
                     </div>
