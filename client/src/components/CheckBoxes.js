@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 
 const CheckBoxes=({s,values,setValues,selectedValues,setSelectedValues,handleSubCatChange})=>{
 
@@ -11,6 +11,7 @@ const CheckBoxes=({s,values,setValues,selectedValues,setSelectedValues,handleSub
                    id="aaa" 
                    value={s._id} 
                     onChange={()=>handleSubCatChange(s._id)}
+                    checked={selectedValues && selectedValues.includes(s._id)}
                 />
             <label htmlFor="aaa">{s.name}</label>
         </div>

@@ -46,17 +46,6 @@ exports.remove=async(req,res)=>{
     }
 }
 
-// exports.getSubs=(req,res)=>{
-//     console.log('getsubs-id',req.params._id);
-//     Sub.find({parent:req.params._id}).exec((err,subs)=>{
-//         if(err){
-//             console.log('get-subs-err',err);
-//         }
-//         console.log('category-subs',subs);
-//         res.json(subs);  
-//     })
-
-// }
 
 exports.getSubs=(req,res)=>{
     console.log('getsubs-id',req.params._id);

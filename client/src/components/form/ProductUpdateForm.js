@@ -1,21 +1,22 @@
-import React from 'react';
+import React,{useState}from 'react';
 import CheckBox from '../CheckBoxes';
 import Resizer from 'react-image-file-resizer';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
 import {toast} from 'react-toastify';
 
-const ProductCreateForm=({handleChange,
+const ProductUpdateForm=({handleChange,
     handleSubmit,
     handleCategoryChange,
     subOptions,
-    showSub,
     setCboxes,
     cboxes,
     values,
     setValues,
     selectedValues,
-    setSelectedValues,handleSubCatChange,loading,setLoading})=>{
+    setSelectedValues,handleSubCatChange,loading,setLoading,arrayOfSubs})=>{
+
+  
 
     //destructure
     const{
@@ -100,7 +101,7 @@ const ProductCreateForm=({handleChange,
                                    <div key={image.public_id} className="product-img-div">
                                         <img  className="product-img" src={image.url} />
                                         <span className="img-cross" onClick={()=>handleImageRemove(image.public_id)}>
-                                            <i className="fas fa-times"></i>
+                                        <i className="fas fa-times"></i>
                                         </span>
                                     </div>
                                     
@@ -135,17 +136,16 @@ const ProductCreateForm=({handleChange,
                             onChange={handleChange}
                         />
                     </div>
+
                     <div>
-                        <select name="category" onChange={handleCategoryChange} className="cat-select">
-                        <option>Select Categories</option>
+                        <select name="category" onChange={handleCategoryChange} className="cat-select" value={category._id}>
+                        {/* <option value={category ? category._id :''}>{category ? category.name : 'Select Categories'}</option> */}
                         {categories.map((c)=><option key={c._id} value={c._id}>{c.name}</option>)}
                             
                         </select>
                     </div>
 
                     
-                    
-                    {showSub &&
                     <div className="sub-cat"> 
                         <h3> Sub Categories</h3>
                         {subOptions ? subOptions.map((s)=>
@@ -157,23 +157,30 @@ const ProductCreateForm=({handleChange,
                             selectedValues={selectedValues}
                             setSelectedValues={setSelectedValues}
                             handleSubCatChange={handleSubCatChange}  
+                            arrayOfSubs={arrayOfSubs}
                             />
                         ) : ''}
                     </div> 
-                    }
-                    
+                   
+                   
                     <div>
                        
                         <input 
                             type="number" 
                             name="price"
                             placeholder="Product Price"
+                            value={price}
                             onChange={handleChange}
                         />
                     </div>
                     <div>
                        
-                        <select  name="shipping" className="cat-select" onChange={handleChange}>
+                        <select  
+                            name="shipping" 
+                            className="cat-select" 
+                            onChange={handleChange}
+                            value={shipping === 'Yes' ? 'Yes' : "No"}
+                            >
                             <option>Shipping </option>
                             <option value="No">No</option>
                             <option value="Yes">Yes</option>
@@ -218,4 +225,4 @@ const ProductCreateForm=({handleChange,
 
 }
 
-export default ProductCreateForm;
+export default ProductUpdateForm;

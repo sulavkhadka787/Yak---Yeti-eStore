@@ -1,8 +1,9 @@
 import React from 'react';
 import AdminNav from '../../components/AdminNav';
-import Footer from '../../components/footer';
+
 
 const AdminDashboard=()=>{
+
 
     return(
         <>
@@ -12,10 +13,11 @@ const AdminDashboard=()=>{
             </div>
             
             <div className="main-content">
-                <p>admin dashboard</p>
+                <h2 className="admin-dashboard-h2">Admin Dashboard</h2>
+               
             </div>
         </div>
-        <Footer/>
+        
         </>
         
     )

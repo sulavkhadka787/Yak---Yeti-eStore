@@ -27,7 +27,7 @@ const ProductCreate=()=>{
     const [subOptions,setSubOptions]=useState([]);
     const [showSub,setShowSub]=useState(false);
     const [cboxes, setCboxes]=useState([]);
-    const[selectedValues,setSelectedValues]=useState([]);
+    const [selectedValues,setSelectedValues]=useState([]);
     const [loading,setLoading]=useState(false);
 
     const{
@@ -111,13 +111,13 @@ const ProductCreate=()=>{
 
     return(
         <>
-            
+             {JSON.stringify(values.subs)}
             <div className="admin-container">
                 <div >
                     <AdminNav/> 
                 </div>
                 
-
+               
                 <div className="main-content">
                     <div className="category-create-form">
                     <h2>Create New Product</h2>
@@ -131,8 +131,6 @@ const ProductCreate=()=>{
                             showSub={showSub}
                             setCboxes={setCboxes}
                             cboxes={cboxes}
-                            setValues={setValues}
-                            handleCategoryChange={handleCategoryChange}
                             selectedValues={selectedValues}
                             setSelectedValues={setSelectedValues}
                             handleSubCatChange={handleSubCatChange}

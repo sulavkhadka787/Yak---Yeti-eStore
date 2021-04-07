@@ -9,7 +9,7 @@ cloudinary.config({
 exports.upload=async(req,res)=>{
     let result=await cloudinary.uploader.upload(req.body.image ,{
         public_id:`${Date.now()}`,
-        resource_type:'auto'
+        resource_type:"auto"
     });
     res.json({
         public_id:result.public_id,
@@ -18,16 +18,6 @@ exports.upload=async(req,res)=>{
 
 }
 
-// exports.remove=(req,res)=>{
-//     let image_id=req.body.public_id;
-//     cloudinary.uploader.destroy(image_id,(err,result)=>{
-//         if(err) {
-//             console.log('cloudinary-img-delete',err);
-//             return res.json({success:false,err});
-//         }
-//         res.send('OKAY');
-//     })
-// }
 
 exports.remove=(req,res)=>{
     
