@@ -38,10 +38,10 @@ const productSchema=new mongoose.Schema({
         }
     ],
     quantity:Number,
-    // sold:{
-    //     type:Number,
-    //     default:0
-    // },
+    sold:{
+        type:Number,
+        default:0
+    },
     images:{
         type:Array
     },

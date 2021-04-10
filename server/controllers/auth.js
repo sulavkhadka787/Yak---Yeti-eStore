@@ -8,11 +8,11 @@ exports.createOrUpdateUser=async(req,res)=>{
     const user=await User.findOneAndUpdate({email},{name},{new:true});
 
     if(user){
-        console.log('userUpdated',user);
+        //console.log('userUpdated',user);
         res.json(user)
     }else{
         const newUser=await new User({email,name}).save();
-        console.log('new user created',newUser);
+        //console.log('new user created',newUser);
         res.json(newUser);
     }
 }

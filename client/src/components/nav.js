@@ -16,15 +16,15 @@ const Nav=()=>{
 
     useEffect(()=>{
         //console.log('redux=user',user);
-        console.log('his',history.location.pathname);
+        //console.log('his',history.location.pathname);
         const aa=history.location.pathname.split('dashboard')[0];
-        console.log('aaa',aa);
+        //console.log('aaa',aa);
         if(history.location.pathname==="/admin/dashboard"){
            
             
             setDashBoardColor(true);
         }
-        console.log('dashbo',dashboardColor);
+        //console.log('dashbo',dashboardColor);
     },[user,dashboardColor])
 
     const handleToggle=()=>{
@@ -45,7 +45,7 @@ const Nav=()=>{
                     <span className="navbar-toggle"  onClick={handleToggle}>
                         <i className="fas fa-bars"></i>
                     </span>
-                    <Link to="/" className="logo">Yak & Yeti</Link>
+                    <Link to="/" className="logo"><span className="logo-y">Y</span>ak & <span className="logo-y">Y</span>eti</Link>
                     <ul className={navToggle ? "main-nav active":"main-nav"} id="js-menu">
                         {user && user.token ?(
                             <li>
@@ -64,11 +64,7 @@ const Nav=()=>{
                             <li >
                                 <Link 
                                     to="/admin/dashboard" 
-                                    className="nav-links" 
-                                    style={{
-                                            color:dashboardColor ? "#FFD700" :"rgba(255,255,255,0.7)",
-                                            fontWeight:dashboardColor ? "900":"normal"
-                                             }}
+                                    className="nav-links"
                                     >
                                     DashBoard
                                     </Link>
