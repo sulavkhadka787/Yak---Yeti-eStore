@@ -18,10 +18,7 @@ const NewArrivals=()=>{
   },[page]);
 
   useEffect(()=>{
-    getProductsCount().then((res)=>{
-        setProductsCount(res.data);
-        console.log('get-products-count',productsCount);
-    })
+    getNewProducts();
       
   },[])
 
@@ -36,6 +33,13 @@ const NewArrivals=()=>{
         })
   }
 
+  const getNewProducts=()=>{
+    getProductsCount().then((res)=>{
+        setProductsCount(res.data);
+        console.log('get-products-count-new arrivals',productsCount);
+    })
+  }
+
   const changePage=({selected})=>{
       console.log('passing value selected',selected);
       setPage(selected);
@@ -48,20 +52,26 @@ const NewArrivals=()=>{
       
                 {/* {loading ? (<h3>Loading...</h3>) :(<h3>New Arrivals</h3>)} */}
                 {loading ? <h3>Loading...</h3>:<h3><Scrolltron text={"New Arrivals"} /></h3>}
-                <div className="homepage-top-container">
+                
+                  <div className="homepage-top-container">
                  
               
                     {products.map((product)=>
-                        <HomeTopProductCard key={product._id} product={product} />
+                        <HomeTopProductCard key={product._id} product={product} productsCount={productsCount}/>
                         
                         
                     )}
             
                 </div>
+                
+                  
+                  
+               
+                
                <ReactPaginate 
                    previousLabel={'Previous'}
                    nextLabel={"Next"}
-                   pageCount={(Math.ceil(productsCount/3))*2}
+                   pageCount={Math.ceil(productsCount/3)}
                    onPageChange={changePage}
                    containerClassName={"paginationBttns"}
                    previousLinkClassName={"previousBttn"}

@@ -61,15 +61,15 @@ const productSchema=new mongoose.Schema({
         trim:true,
         text:true
     },
-    // ratings:[
-    //     {
-    //         star:Number,
-    //         postedBy:{
-    //             type:ObjectId,
-    //             ref:"User"
-    //         }
-    //     }
-    // ]
+    ratings:[
+        {
+            star:Number,
+            postedBy:{
+                type:ObjectId,
+                ref:"User"
+            }
+        }
+    ]
 
 },
 {timestamps:true}

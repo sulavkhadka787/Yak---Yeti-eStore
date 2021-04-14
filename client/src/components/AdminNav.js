@@ -1,8 +1,6 @@
 import React,{useState} from 'react';
 import {Link} from 'react-router-dom';
 
-import Nav from '../components/nav';
-
 const AdminNav=()=>{
 
     const [nav,setNav]=useState('false');

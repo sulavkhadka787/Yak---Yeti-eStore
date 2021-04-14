@@ -15,16 +15,15 @@ const Nav=()=>{
     const {user}=useSelector((state)=>({...state}));
 
     useEffect(()=>{
-        //console.log('redux=user',user);
-        //console.log('his',history.location.pathname);
+       
         const aa=history.location.pathname.split('dashboard')[0];
-        //console.log('aaa',aa);
+       
         if(history.location.pathname==="/admin/dashboard"){
            
             
             setDashBoardColor(true);
         }
-        //console.log('dashbo',dashboardColor);
+        
     },[user,dashboardColor])
 
     const handleToggle=()=>{
@@ -92,8 +91,10 @@ const Nav=()=>{
                             </li>
                         )}
                     
-                        <li>
-                            <input type="search" className="search nav-links" placeholder="search" />
+                        <li className="cart-img-li">
+                            {/* <input type="search" className="search nav-links" placeholder="search" /> */}
+                            <span className='cart-img-span'> <img className='cart-img' src="/images/cart.png"/>2</span>
+                            
                         </li>
                 </ul>
             </nav>
