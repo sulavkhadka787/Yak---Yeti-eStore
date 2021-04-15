@@ -131,9 +131,10 @@ exports.productsCount = async (req, res) => {
 };
 
 exports.productStar=async(req,res)=>{
-    const product=Product.findById(req.params.productId).exec();
-    const user=User.findOne({email:req.user.email}).exec();
+    const product=await Product.findById(req.params.productId).exec();
+    const user=await User.findOne({email:req.user.email}).exec();
     const {star}=req.body;
+    console.log('req-body-star',star);
 
     //who is updating
     //check if currently logged in user have already added rating to this product?
@@ -145,7 +146,7 @@ exports.productStar=async(req,res)=>{
                 $push:{ratings:{star,postedBy:user._id}}
             },{new:true}
         ).exec();
-        console.log('ratingAdded',ratingAdded);
+        console.log('ratingAdded',ratingAdded,'product',product.ratings);
         res.json(ratingAdded);
     }else{
         //if user has already left a rating, update it
@@ -154,7 +155,7 @@ exports.productStar=async(req,res)=>{
             {$set:{"ratings.$.star":star}},
             {new:true}
         ).exec();
-        console.log('ratingUpdated',ratingUpdated);
+        console.log('ratingUpdated',ratingUpdated,'product',product.ratings);
         res.json(ratingUpdated);
     }
 }

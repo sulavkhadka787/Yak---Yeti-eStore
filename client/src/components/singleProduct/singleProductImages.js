@@ -1,11 +1,22 @@
 import React,{useState,useEffect} from 'react';
 import StarRating from 'react-star-ratings';
-import Defaultimage from '../../images/defaultimage.jpg'
+import Defaultimage from '../../images/defaultimage.jpg';
+import {useSelector} from 'react-redux';
+import {useHistory,useParams} from 'react-router-dom';
 
-const SingleProductImages=({product})=>{
+const SingleProductImages=({product,onStarClick,star})=>{
 
     const [selected ,setSelected]=useState('');
+    const [showStar, setShowStar]=useState(true);
+
     const {title,images,category,price,_id}=product;
+    
+
+    const {user}=useSelector((state)=>({...state}));
+    const history=useHistory();
+    let {slug}=useParams();
+    console.log('slug',slug);
+    
     
     useEffect(()=>{
         if(images && images.length){
@@ -19,6 +30,17 @@ const SingleProductImages=({product})=>{
         setSelected(e.target.src);
     }
 
+    const showRatingDiv=()=>{
+        if(user && user.token){
+            setShowStar(false);
+        }else{
+            history.push({
+                pathname:'/login',
+                state:{from:`/product/${slug}`}
+            });
+        }
+        
+    }
     return(
         <>
             <div className="small-container single-product">
@@ -45,8 +67,7 @@ const SingleProductImages=({product})=>{
                            starRatedColor="orange"
                             numberOfStars={5}
                             name={_id}
-                            rating={2}
-                            changeRating={(newRating,name)=>console.log('newRating',newRating,"name",name)} 
+                            rating={star}
                             isSelectable={true}   
                             /> 
                         <h2>Category:{category && category.name}</h2>
@@ -55,6 +76,20 @@ const SingleProductImages=({product})=>{
                         <h4>Available Stock:</h4>
                         <input type="number" />
                         <a href="" className="btn">Add to Card</a>
+                        <div onClick={showRatingDiv} className={showStar ? "user-rating" :"star-rating"}><i className="far fa-star"/>{" "}Leave a Rating</div>
+                        <div  className={showStar ? "star-rating ":"show-star-rating star"}>
+                        <StarRating 
+                            starDimension="20px" 
+                            starRatedColor="orange"
+                            numberOfStars={5}
+                            name={_id}
+                            rating={star}
+                            changeRating={onStarClick} 
+                            isSelectable={true}  
+                        /> 
+                        </div>
+                        
+                        
                         <h3>Product Details<i className="fa fa-indent"></i></h3>
                         <br/>
                         <p>{product.description}</p>

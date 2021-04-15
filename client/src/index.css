@@ -831,6 +831,36 @@ a:hover{
     cursor:pointer;
 }
 
+/* product ratings */
+.user-rating{
+    width:40%;
+    padding:5px 5px;
+    margin-bottom:20px;
+    border-radius:5px;
+    background-color:#2376ae;
+    cursor: pointer;
+    color:white;
+    font-weight:900;
+}
+
+.star{
+    padding:5px 5px;
+    width:35%;
+    border-radius:5px;
+    background-color: grey;
+    margin-bottom:20px;
+}
+.star-rating{
+    display: none;
+}
+
+.show-star-rating{
+    display: block;
+}
+
+.hompage-star{
+    
+}
 /* ===footer=== */
 .footer{
     
@@ -1040,6 +1070,10 @@ a:hover{
         padding:0 0;
     }
 
+    /* ratings */
+    .star{
+        width:60%;
+    }
     
 }
 

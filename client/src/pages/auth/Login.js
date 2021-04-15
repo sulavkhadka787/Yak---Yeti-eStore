@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 import {createOrUpdateUser} from '../../functions/auth';
     
 const Login=({history})=>{
-    
+    const historyState=history.location.state;
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const [loading,setLoading]=useState(false);
@@ -16,17 +16,25 @@ const Login=({history})=>{
     const {user}=useSelector((state)=>({...state}));
 
     useEffect(()=>{
+        if(historyState) return;
         if(user && user.token){
             history.push('/')
         }
     },[user,dispatch,history])
 
     const roleBasedRedirect=(res)=>{
-        if(res.data.role==="admin"){
-            history.push('/admin/dashboard');
+        
+        
+        if(historyState){
+            history.push(historyState.from);
         }else{
-            history.push('/user/history');
+            if(res.data.role==="admin"){
+                history.push('/admin/dashboard');
+            }else{
+                history.push('/user/history');
+            }
         }
+        
     }
 
     const handleSubmit=async(e)=>{
