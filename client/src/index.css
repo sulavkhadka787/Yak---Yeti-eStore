@@ -217,7 +217,7 @@ a:hover{
     }
 
     .logo:hover,
-    .nav-links:hover{
+    .nav-links:not(.search):hover{
         color:rgba(255,255,255,1);
         font-weight: 900;
     }
@@ -858,8 +858,10 @@ a:hover{
     display: block;
 }
 
-.hompage-star{
-    
+.no-ratings-text{
+    color:Red;
+    font-size: 20px;
+    font-weight:900;
 }
 /* ===footer=== */
 .footer{

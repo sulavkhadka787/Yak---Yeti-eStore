@@ -20,10 +20,12 @@ import ProductCreate from './pages/admin/product/ProductCreate';
 import AllProducts from './pages/admin/product/AllProducts';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
 import Product from './pages/Product';
+import Shop from './pages/Shop';
 
 import {auth} from './firebase';
 import {useDispatch} from 'react-redux';
 import {currentUser} from './functions/auth';
+
 
 
 const App=()=> {
@@ -66,6 +68,7 @@ const App=()=> {
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword}/>
         <Route exact path="/product/:slug" component={Product}/>
+        <Route exact path="/shop" component={Shop}/>
         <UserRoute exact path="/user/history" component={History}/>
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <AdminRoute exact path="/admin/category" component={CategoryCreate} />

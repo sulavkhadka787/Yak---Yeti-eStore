@@ -3,6 +3,7 @@ import StarRating from 'react-star-ratings';
 import Defaultimage from '../../images/defaultimage.jpg';
 import {useSelector} from 'react-redux';
 import {useHistory,useParams} from 'react-router-dom';
+import {showAverage} from '../../functions/rating';
 
 const SingleProductImages=({product,onStarClick,star})=>{
 
@@ -63,13 +64,14 @@ const SingleProductImages=({product,onStarClick,star})=>{
 
                     <div className="col-2">
                         <h1>{title}</h1>
-                       <StarRating 
-                           starRatedColor="orange"
-                            numberOfStars={5}
-                            name={_id}
-                            rating={star}
-                            isSelectable={true}   
-                            /> 
+                        {product && product.ratings && product.ratings.length>0
+                            ? (showAverage(product))
+                            :(<StarRating 
+                                starRatedColor="orange"
+                                numberOfStars={5}   
+                            />) 
+                        }
+                       
                         <h2>Category:{category && category.name}</h2>
                         
                         <h4>${price}</h4>

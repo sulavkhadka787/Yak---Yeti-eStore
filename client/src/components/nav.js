@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {useSelector} from 'react-redux';
+import Search from './form/Search';
 
 const Nav=()=>{
     const [navToggle, setNavToggle]=useState(false);
@@ -57,7 +58,7 @@ const Nav=()=>{
                         )}
                     
                         <li>
-                            <Link to="/" className="nav-links">Products</Link>
+                            <Link to="/shop" className="nav-links">Shop</Link>
                         </li>
                         {user && user.role==="admin" ? (
                             <li >
@@ -78,9 +79,7 @@ const Nav=()=>{
                             
                         )}
                         
-                        <li>
-                        <Link to="/" className="nav-links">Contact Us</Link>
-                        </li>
+                        
                         {user && user.token ? (
                             <li>
                             <Link to="/login" className="nav-links" onClick={logout}>Logout</Link>
@@ -90,9 +89,13 @@ const Nav=()=>{
                                 <Link to="/login" className="nav-links">Login</Link>
                             </li>
                         )}
+                        <li>
+                          {/* <input type="search" className="search nav-links" placeholder="search" />  */}
+                          <Search />
+                        </li>
                     
                         <li className="cart-img-li">
-                            {/* <input type="search" className="search nav-links" placeholder="search" /> */}
+                           
                             <span className='cart-img-span'> <img className='cart-img' src="/images/cart.png"/>2</span>
                             
                         </li>

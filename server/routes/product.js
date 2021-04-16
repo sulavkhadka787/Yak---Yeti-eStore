@@ -5,7 +5,7 @@ const router=express.Router();
 const {authCheck,adminCheck}=require('../middlewares/auth');
 
 //controller
-const {create,listAll,remove,read,update,list,productsCount,productStar}=require('../controllers/product');
+const {create,listAll,remove,read,update,list,productsCount,productStar,searchFilters}=require('../controllers/product');
 
 //routes
 router.get('/products/total',productsCount);
@@ -20,6 +20,9 @@ router.post('/products',list);
 
 //rating
 router.put("/product/star/:productId", authCheck,productStar);
+
+//search
+// router.post('/search/filters',searchFilters);
 
 
 
