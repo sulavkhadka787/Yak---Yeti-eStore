@@ -22,7 +22,7 @@ router.post('/products',list);
 router.put("/product/star/:productId", authCheck,productStar);
 
 //search
-// router.post('/search/filters',searchFilters);
+router.post('/search/filters',searchFilters);
 
 
 

@@ -3,8 +3,6 @@ import {useHistory} from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux';
 
 const Search=()=>{
-
-    const [typedText, setTypedText]=useState('');
     let dispatch=useDispatch();
     const {search}=useSelector((state)=>({...state}));
     const {text}=search;
@@ -13,7 +11,7 @@ const Search=()=>{
     const history=useHistory();
 
     const handleChange=(e)=>{
-        setTypedText(e.target.value);
+       
         console.log(e.target.value);
         dispatch({
             type:'SEARCH_QUERY',
@@ -24,7 +22,7 @@ const Search=()=>{
     const handleKeyPress=(e)=>{
         
        if(e.key==='Enter'){
-          history.push(`/shop?${typedText}`)
+          history.push(`/shop?${text}`)
        }
     }
 
@@ -35,8 +33,7 @@ const Search=()=>{
             onKeyPress={handleKeyPress} 
             className="search nav-links" 
             placeholder="search" 
-            autocomplete="off"
-            value={typedText}
+            value={text}
         /> 
     )
 }

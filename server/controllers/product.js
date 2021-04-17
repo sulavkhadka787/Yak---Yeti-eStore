@@ -134,7 +134,7 @@ exports.productStar=async(req,res)=>{
     const product=await Product.findById(req.params.productId).exec();
     const user=await User.findOne({email:req.user.email}).exec();
     const {star}=req.body;
-    console.log('req-body-star',star);
+   //console.log('req-body-star',star);
 
     //who is updating
     //check if currently logged in user have already added rating to this product?
@@ -146,7 +146,7 @@ exports.productStar=async(req,res)=>{
                 $push:{ratings:{star,postedBy:user._id}}
             },{new:true}
         ).exec();
-        console.log('ratingAdded',ratingAdded,'product',product.ratings);
+        //console.log('ratingAdded',ratingAdded,'product',product.ratings);
         res.json(ratingAdded);
     }else{
         //if user has already left a rating, update it
@@ -155,28 +155,63 @@ exports.productStar=async(req,res)=>{
             {$set:{"ratings.$.star":star}},
             {new:true}
         ).exec();
-        console.log('ratingUpdated',ratingUpdated,'product',product.ratings);
+        //console.log('ratingUpdated',ratingUpdated,'product',product.ratings);
         res.json(ratingUpdated);
     }
 }
 
 //search/filter
 
+// const handleQuery=async(req,res,query)=>{
+//     const products=await Product.find({$text:{$search:query}})
+//         .populate("category","_id name")
+//         .populate("subs","_id name")
+//         .populate("postedBy","_id name")
+//         .exec();
+
+//         res.json(products);
+// };
+
 const handleQuery=async(req,res,query)=>{
     const products=await Product.find({$text:{$search:query}})
-        .populate("category","_id name")
-        .populate("subs","_id name")
-        .populate("postedBy","_id name")
-        .exec();
+    .populate("category","_id name")
+    .populate("subs","_id name")
+    .populate("postedBy","_id name")
+    .exec()
 
+    res.json(products);
+  }
+
+  const handlePrice=async(req,res,price)=>{
+      try{
+          let products=await Product.find({
+              price:{
+                  $gte:price[0],
+                  $lte:price[1]
+              }
+          })
+          .populate("category","_id name")
+          .populate("subs","_id name")
+          .populate("postedBy","_id name")
+          .exec()
         res.json(products);
-};
 
+      }catch(err){
+        console.log('price-search-error',err);
+      }
+  }
 
 exports.searchFilters=async(req,res)=>{
-    const {query}=req.body;
+    const {query,price}=req.body;
+    console.log('req-body-price',req.body.price);
     if(query){
-        console.log('query',query);
+        console.log('query====>>>',query);
         await handleQuery(req,res,query);
+    }
+
+    //price[0,200]
+    if(price !==undefined){
+        console.log('price===>>>',price);
+        await handlePrice(req,res,price);
     }
 }

@@ -45,4 +45,8 @@ export const productStar=async(productId,star,authtoken)=>
             authtoken
         }
     }
-    )
+)
+
+export const fetchProductsByFilter=async(arg)=>
+    await axios.post(`${process.env.REACT_APP_API}/search/filters`,arg);
+
