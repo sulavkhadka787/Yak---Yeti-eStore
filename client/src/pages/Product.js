@@ -32,7 +32,7 @@ const Product=({match})=>{
    
     const loadSingleProduct=()=>{
         getProduct(slug).then((res)=>{
-            console.log('getprdocutimage',res.data);
+            //console.log('getprdocutimage',res.data);
             setProduct(res.data);
         });
     }    
@@ -42,7 +42,7 @@ const Product=({match})=>{
         
         try{
             productStar(name,newRating,user.token).then((res)=>{
-                console.log('rating-res',res.data);
+                //console.log('rating-res',res.data);
                 setStar(newRating);
                 loadSingleProduct();
                 toast.success('Your Ratings has been submitted, it will appear soon');

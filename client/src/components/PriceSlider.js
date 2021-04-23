@@ -1,8 +1,10 @@
-import React,{useState} from 'react';
+import React from 'react';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 
-const Slider=({priceRange,handleSlider})=>{
+const PriceSlider=({priceRange,handleslider})=>{
+
+    
 
     return(
         <>
@@ -11,10 +13,12 @@ const Slider=({priceRange,handleSlider})=>{
             minValue={0}
             value={priceRange}
             formatLabel={value => `$${value}`}
-            onChange={handleSlider}
+            onChange={handleslider}
        />
         </>
     )
+
+    
 }
 
-export default Slider;
+export default PriceSlider;

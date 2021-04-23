@@ -14,7 +14,7 @@ const NewArrivals=()=>{
 
   useEffect(()=>{
     loadAllProduct();
-    console.log('setpageuseffect',page);
+    //console.log('setpageuseffect',page);
   },[page]);
 
   useEffect(()=>{
@@ -27,7 +27,7 @@ const NewArrivals=()=>{
       //sort order limit
       getProducts("createdAt","desc",page)
         .then((res)=>{
-            console.log('New Arrivals',res);
+           // console.log('New Arrivals',res);
             setProducts(res.data);
             setLoading(false);
         })
@@ -36,14 +36,14 @@ const NewArrivals=()=>{
   const getNewProducts=()=>{
     getProductsCount().then((res)=>{
         setProductsCount(res.data);
-        console.log('get-products-count-new arrivals',productsCount);
+       // console.log('get-products-count-new arrivals',productsCount);
     })
   }
 
   const changePage=({selected})=>{
       console.log('passing value selected',selected);
       setPage(selected);
-      console.log('setpage-seelected',page);
+      //console.log('setpage-seelected',page);
   }
 
     return(

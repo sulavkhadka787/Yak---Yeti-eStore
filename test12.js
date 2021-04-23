@@ -27,38 +27,27 @@ const Shop=()=>{
     useEffect( ()=>{
          loadAllProducts();
          getCategories()
-         .then(res=>
-             {
-                 
-                 setCategories(res.data);
-             });
+         .then(res=>setCategories(res.data));
     },[]);
 
-   
-
-    //1. load products by default on page load
-    // const loadAllProducts=()=>{
-    //     setLoading(true);
-    //     getProductsByCount().then((prods)=>{
-    //         console.log('get-products-by-count',prods.data);
-    //         setProducts(prods.data);
-    //         setLoading(false);
-    //     })
-    // }
-
-    const loadAllProducts=()=>{
-        setLoading(true);
-        getProductsByCount()
-        .then((res)=>{
-            console.log('get-all-products',res)
-            setLoading(false);
-            setProducts(res.data)
-        })
-        .catch((err)=>{
-            setLoading(false);
-            console.log(err)
+    const fetchProducts=(arg)=>{
+        fetchProductsByFilter(arg)
+            .then(res=>{
+                setProducts(res.data);
         })
     }
+
+    //1. load products by default on page load
+    const loadAllProducts=()=>{
+        setLoading(true);
+        getProductsByCount().then((prods)=>{
+            console.log('get-products-by-count',prods.data);
+            setProducts(prods.data);
+            setLoading(false);
+        })
+    }
+
+    
 
     //2. load products on user search input
     useEffect(()=>{
@@ -73,84 +62,87 @@ const Shop=()=>{
         
     },[text])
 
-    const fetchProducts=(arg)=>{
-        fetchProductsByFilter(arg)
-            .then(res=>{
-                setProducts(res.data);
-        })
-    }
+    
 
     //3.load products based on price range
-    useEffect(()=>{
+    // useEffect(()=>{
        
-        fetchProducts({price:[parseInt(priceRange.min),parseInt(priceRange.max)]})
-    },[ok]);
+    //     fetchProducts({price:[parseInt(priceRange.min),parseInt(priceRange.max)]})
+    // },[ok]);
 
-    const handleSlider=(range)=>{
-            dispatch({
-                type:'SEARCH_QUERY',
-                payload:{text:""}
-            })
-            setCategoryIds([]);
-            setStar('');
-            setPriceRange(range);
-            setTimeout(()=>{
-                setOk(!ok);
-            },300);
+    // const handleSlider=(range)=>{
+    //         dispatch({
+    //             type:'SEARCH_QUERY',
+    //             payload:{text:""}
+    //         })
+    //         setCategoryIds([]);
+    //         setStar('');
+    //         setPriceRange(range);
+    //         setTimeout(()=>{
+    //             setOk(!ok);
+    //         },300);
            
-    }
+    // }
 
     //4. load products based on category
     //show category
 
-   
-
-    const handleCheck=(e)=>{
-        dispatch({
-            type:'SEARCH_QUERY',
-            payload:{text:""}
-        })
-
-        setPriceRange({min:0,max:0})
-        setStar('');
-        let inTheState=[...categoryIds];
-        let justChecked=e.target.value;
-        let foundIntheState=inTheState.indexOf(justChecked);
-        
-        if(foundIntheState===-1){
-            inTheState.push(justChecked);
-            
-        }else{
-            inTheState.splice(foundIntheState,1);
-            
-        }
-        
-        setCategoryIds(inTheState);
-        if(inTheState.length > 0){
-            fetchProducts({category:inTheState});
-        }else{
-            loadAllProducts();
-        }
-       
+    const handleSlider=()=>{
+        //
     }
 
-    useEffect(()=>{
-        console.log('setstar',star);
-        fetchProducts({stars:star})
-    },[star])
-    //5.Show products by star ratings
-    const handleStarClick=(num)=>{
-        dispatch({
-            type:'SEARCH_QUERY',
-            payload:{text:""}
-        })
-
-        setPriceRange({min:0,max:0});
-        setCategoryIds([]);
-        setStar(num);
-       
+    const handleCheck=()=>{
+        //
     }
+    // const handleCheck=(e)=>{
+    //     dispatch({
+    //         type:'SEARCH_QUERY',
+    //         payload:{text:""}
+    //     })
 
+    //     setPriceRange({min:0,max:0})
+    //     setStar('');
+    //     let inTheState=[...categoryIds];
+    //     let justChecked=e.target.value;
+    //     let foundIntheState=inTheState.indexOf(justChecked);
+        
+    //     if(foundIntheState===-1){
+    //         inTheState.push(justChecked);
+            
+    //     }else{
+    //         inTheState.splice(foundIntheState,1);
+            
+    //     }
+        
+    //     setCategoryIds(inTheState);
+    //     if(inTheState.length > 0){
+    //         fetchProducts({category:inTheState});
+    //     }else{
+    //         loadAllProducts();
+    //     }
+       
+    // }
+
+    // useEffect(()=>{
+    //     console.log('setstar',star);
+    //     fetchProducts({stars:star})
+    // },[star])
+    // //5.Show products by star ratings
+    // const handleStarClick=(num)=>{
+    //     dispatch({
+    //         type:'SEARCH_QUERY',
+    //         payload:{text:""}
+    //     })
+
+    //     setPriceRange({min:0,max:0});
+    //     setCategoryIds([]);
+    //     setStar(num);
+       
+    // }
+
+    const handleStarClick=()=>{
+        //
+    }
     return(
         <>
             <Nav />

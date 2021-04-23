@@ -7,48 +7,42 @@ import Nav from '../components/nav';
 import Slider from '../components/slider';
 import StarSearch from '../components/StarSearch';
 
-
-
 const Shop=()=>{
 
     const [products, setProducts]=useState([]);
-    const [priceRange,setPriceRange]=useState({min:0,max:250});
+    const [priceRange,setPriceRange]=useState({min:0,max:0});
     const [loading,setLoading]=useState(false);
     const [ok,setOk]=useState(false);
     const [categories,setCategories]=useState([]);
     const [categoryIds,setCategoryIds]=useState([]);
     const [star, setStar]=useState();
 
+   
     const dispatch=useDispatch();
 
     const {search}=useSelector((state)=>({...state}));
     const{text}=search;
 
-    useEffect( ()=>{
-         loadAllProducts();
-         getCategories()
-         .then(res=>
-             {
-                 
-                 setCategories(res.data);
-             });
-    },[]);
+    useEffect(()=>{
+           loadAllProducts();
+           getCategories()
+           .then(res=>
+               {
+                   
+                   setCategories(res.data);
+               });
+    },[])
 
-   
-
-    //1. load products by default on page load
-    // const loadAllProducts=()=>{
-    //     setLoading(true);
-    //     getProductsByCount().then((prods)=>{
-    //         console.log('get-products-by-count',prods.data);
-    //         setProducts(prods.data);
-    //         setLoading(false);
-    //     })
-    // }
+    const fetchProducts=(arg)=>{
+        fetchProductsByFilter(arg)
+            .then(res=>{
+                setProducts(res.data);
+        })
+    }
 
     const loadAllProducts=()=>{
         setLoading(true);
-        getProductsByCount()
+        getProductsByCount(100)
         .then((res)=>{
             console.log('get-all-products',res)
             setLoading(false);
@@ -60,8 +54,8 @@ const Shop=()=>{
         })
     }
 
-    //2. load products on user search input
-    useEffect(()=>{
+     //2. load products on user search input
+     useEffect(()=>{
         //console.log('2. load products on user search input',text);
         const delayed=setTimeout(()=>{
             fetchProducts({query:text});
@@ -73,37 +67,12 @@ const Shop=()=>{
         
     },[text])
 
-    const fetchProducts=(arg)=>{
-        fetchProductsByFilter(arg)
-            .then(res=>{
-                setProducts(res.data);
-        })
-    }
-
-    //3.load products based on price range
-    useEffect(()=>{
-       
-        fetchProducts({price:[parseInt(priceRange.min),parseInt(priceRange.max)]})
-    },[ok]);
-
-    const handleSlider=(range)=>{
-            dispatch({
-                type:'SEARCH_QUERY',
-                payload:{text:""}
-            })
-            setCategoryIds([]);
-            setStar('');
-            setPriceRange(range);
-            setTimeout(()=>{
-                setOk(!ok);
-            },300);
-           
-    }
-
-    //4. load products based on category
-    //show category
+    
 
    
+    const handleSlider=()=>{
+        //
+    }
 
     const handleCheck=(e)=>{
         dispatch({
@@ -134,6 +103,7 @@ const Shop=()=>{
        
     }
 
+    
     useEffect(()=>{
         console.log('setstar',star);
         fetchProducts({stars:star})
@@ -150,6 +120,7 @@ const Shop=()=>{
         setStar(num);
        
     }
+
 
     return(
         <>
@@ -171,7 +142,7 @@ const Shop=()=>{
                             <input type="checkbox" 
                                 id="aaa" 
                                 value={c._id} 
-                                onChange={handleCheck}
+                                onClick={handleCheck}
                                 checked={categoryIds.includes(c._id)}
                             />
                             <label htmlFor="aaa">{c.name}</label>

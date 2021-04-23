@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import {userReducer} from './userReducer';
-import {searchReducer} from './searchReducer';
+import {searchReducer} from './SearchReducer';
 
 const rootReducer=combineReducers({
     user:userReducer,

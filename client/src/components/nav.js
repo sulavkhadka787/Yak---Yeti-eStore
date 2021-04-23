@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import Search from './form/Search';
+import NavSearch from './form/NavSearch';
 
 const Nav=()=>{
     const [navToggle, setNavToggle]=useState(false);
@@ -91,7 +92,8 @@ const Nav=()=>{
                         )}
                         <li>
                           {/* <input type="search" className="search nav-links" placeholder="search" />  */}
-                          <Search />
+                          {/* <Search /> */}
+                          <NavSearch />
                         </li>
                     
                         <li className="cart-img-li">

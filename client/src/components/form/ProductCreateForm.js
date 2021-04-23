@@ -17,17 +17,31 @@ const ProductCreateForm=({handleChange,
     selectedValues,
     setSelectedValues,handleSubCatChange,loading,setLoading})=>{
 
+    // //destructure
+    // const{
+    //     title,
+    //     description,
+    //     price,
+    //     categories,
+    //     category,
+    //     subs,
+    //     shipping,
+    //     quantity,
+    //     images,
+    //     color,
+    //     brand
+
+    // } = values;
+
     //destructure
     const{
         title,
         description,
-        price,
+        
         categories,
-        category,
-        subs,
-        shipping,
+        
         quantity,
-        images,
+       
         color,
         brand
 

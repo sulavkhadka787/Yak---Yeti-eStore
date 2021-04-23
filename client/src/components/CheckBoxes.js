@@ -15,11 +15,7 @@ const CheckBoxes=({s,values,setValues,selectedValues,setSelectedValues,handleSub
                 />
             <label htmlFor="aaa">{s.name}</label>
         </div>
-    
-        
-        
-            
-        
+      
     )
 }
 

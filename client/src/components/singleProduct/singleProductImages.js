@@ -16,7 +16,7 @@ const SingleProductImages=({product,onStarClick,star})=>{
     const {user}=useSelector((state)=>({...state}));
     const history=useHistory();
     let {slug}=useParams();
-    console.log('slug',slug);
+    
     
     
     useEffect(()=>{
@@ -24,7 +24,7 @@ const SingleProductImages=({product,onStarClick,star})=>{
             setSelected(images[0].url)
         }
        
-    },[images])
+    },[images,slug])
     
     const changeImage=(e)=>{
         console.log('imageonclick',e.target.src);
@@ -44,6 +44,7 @@ const SingleProductImages=({product,onStarClick,star})=>{
     }
     return(
         <>
+      
             <div className="small-container single-product">
                 <div className="row">
                     <div className="col-2">

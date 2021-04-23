@@ -18,7 +18,7 @@ const BestSellers=()=>{
   useEffect(()=>{
     getProductsCount().then((res)=>{
         setProductsCount(res.data);
-        console.log('get-products-count',productsCount);
+       // console.log('get-products-count',productsCount);
     })
       
   },[])
@@ -28,7 +28,7 @@ const BestSellers=()=>{
       //sort order limit
       getProducts("sold","desc",page)
         .then((res)=>{
-            console.log('Bestsellers-getproducts',res);
+            //console.log('Bestsellers-getproducts',res);
             setProducts(res.data);
             setLoading(false);
         })
