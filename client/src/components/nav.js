@@ -4,7 +4,6 @@ import firebase from 'firebase';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import Search from './form/Search';
 import NavSearch from './form/NavSearch';
 
 const Nav=()=>{
@@ -15,6 +14,7 @@ const Nav=()=>{
     const history=useHistory();
 
     const {user}=useSelector((state)=>({...state}));
+    const {cart}=useSelector((state)=>({...state}))
 
     useEffect(()=>{
        
@@ -98,7 +98,7 @@ const Nav=()=>{
                     
                         <li className="cart-img-li">
                            
-                            <span className='cart-img-span'> <img className='cart-img' src="/images/cart.png"/>2</span>
+                            <span className='cart-img-span'> <Link to="/cart"><img className='cart-img' src="/images/cart.png"/></Link>{cart.length}</span>
                             
                         </li>
                 </ul>

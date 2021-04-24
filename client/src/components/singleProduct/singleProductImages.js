@@ -1,12 +1,16 @@
 import React,{useState,useEffect} from 'react';
 import StarRating from 'react-star-ratings';
 import Defaultimage from '../../images/defaultimage.jpg';
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
 import {useHistory,useParams} from 'react-router-dom';
 import {showAverage} from '../../functions/rating';
+import _ from 'lodash';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 const SingleProductImages=({product,onStarClick,star})=>{
 
+    const [tooltip,setTooltip]=useState('Add to Cart');
     const [selected ,setSelected]=useState('');
     const [showStar, setShowStar]=useState(true);
 
@@ -16,6 +20,8 @@ const SingleProductImages=({product,onStarClick,star})=>{
     const {user}=useSelector((state)=>({...state}));
     const history=useHistory();
     let {slug}=useParams();
+
+    const dispatch=useDispatch();
     
     
     
@@ -42,6 +48,33 @@ const SingleProductImages=({product,onStarClick,star})=>{
         }
         
     }
+
+    const handleAddToCart=()=>{
+        let cart=[];
+        if(typeof window !=='undefined'){
+            if(localStorage.getItem('cart')){
+                cart=JSON.parse(localStorage.getItem('cart'));
+            }
+
+            //push new product to cart
+            cart.push({
+                ...product,
+                count:1
+            })
+
+            //remove duplicates
+            let unique=_.uniqWith(cart,_.isEqual);
+            console.log('unique-lodash-cart',unique);
+            localStorage.setItem("cart",JSON.stringify(unique));
+            setTooltip("Added");
+            //add to redux state
+            dispatch({
+                type:'ADD_TO_CART',
+                payload:unique
+            })
+        }
+    }
+
     return(
         <>
       
@@ -78,7 +111,7 @@ const SingleProductImages=({product,onStarClick,star})=>{
                         <h4>${price}</h4>
                         <h4>Available Stock:</h4>
                         <input type="number" />
-                        <a href="" className="btn">Add to Card</a>
+                       <Tippy content={tooltip}><a onClick={handleAddToCart} className="btn">Add to Card</a></Tippy> 
                         <div onClick={showRatingDiv} className={showStar ? "user-rating" :"star-rating"}><i className="far fa-star"/>{" "}Leave a Rating</div>
                         <div  className={showStar ? "star-rating ":"show-star-rating star"}>
                         <StarRating 
