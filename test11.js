@@ -1,182 +1,165 @@
-import React,{useState,useEffect} from 'react';
-import {getProductsByCount,fetchProductsByFilter} from '../functions/product';
-import {getCategories} from '../functions/category';
+import React,{useState} from 'react';
 import {useSelector,useDispatch} from 'react-redux';
-import HomeTopProductCard from '../components/cards/homeTopProductCard';
+import {Link} from 'react-router-dom';
 import Nav from '../components/nav';
-import Slider from '../components/slider';
-import StarSearch from '../components/StarSearch';
 
-const Shop=()=>{
 
-    const [products, setProducts]=useState([]);
-    const [priceRange,setPriceRange]=useState({min:0,max:0});
-    const [loading,setLoading]=useState(false);
-    const [ok,setOk]=useState(false);
-    const [categories,setCategories]=useState([]);
-    const [categoryIds,setCategoryIds]=useState([]);
-    const [star, setStar]=useState();
+const Cart=({history})=>{
 
-   
+    const [count, setCount]=useState(0)
+    const {cart,user}=useSelector((state)=>({...state}));   
     const dispatch=useDispatch();
 
-    const {search}=useSelector((state)=>({...state}));
-    const{text}=search;
-
-    useEffect(()=>{
-           loadAllProducts();
-           getCategories()
-           .then(res=>
-               {
-                   
-                   setCategories(res.data);
-               });
-    },[])
-
-    const fetchProducts=(arg)=>{
-        fetchProductsByFilter(arg)
-            .then(res=>{
-                setProducts(res.data);
-        })
+    const getTotal=()=>{
+        return cart.reduce((currentValue,nextValue)=>{
+            return currentValue+nextValue.count*nextValue.price
+        },0)
+    }
+        
+    const saveOrderToDb=()=>{
+        console.log('hello world');
     }
 
-    const loadAllProducts=()=>{
-        setLoading(true);
-        getProductsByCount(100)
-        .then((res)=>{
-            console.log('get-all-products',res)
-            setLoading(false);
-            setProducts(res.data)
-        })
-        .catch((err)=>{
-            setLoading(false);
-            console.log(err)
-        })
-    }
+    const handleCount=(e)=>{
+        console.log('handlecount',e.target.value);
+        let shoppingCart=[];
 
-     //2. load products on user search input
-     useEffect(()=>{
-        //console.log('2. load products on user search input',text);
-        const delayed=setTimeout(()=>{
-            fetchProducts({query:text});
-            if(!text){
-                loadAllProducts();
+        if(typeof window !== 'undefined'){
+            if(localStorage.getItem('cart')){
+                shoppingCart=JSON.parse(localStorage.getItem('cart'));
             }
-        },300);
-        return ()=>clearTimeout(delayed);
-        
-    },[text])
 
-    
+            shoppingCart.map((product,i)=>{
+                shoppingCart[i].count=e.target.value;
+            })
 
-   
-    const handleSlider=()=>{
-        //
-    }
-
-    const handleCheck=(e)=>{
-        dispatch({
-            type:'SEARCH_QUERY',
-            payload:{text:""}
-        })
-
-        setPriceRange({min:0,max:0})
-        setStar('');
-        let inTheState=[...categoryIds];
-        let justChecked=e.target.value;
-        let foundIntheState=inTheState.indexOf(justChecked);
-        
-        if(foundIntheState===-1){
-            inTheState.push(justChecked);
-            
-        }else{
-            inTheState.splice(foundIntheState,1);
-            
+            localStorage.setItem('cart',JSON.stringify(cart));
+            dispatch({
+                type:'ADD_TO_CART',
+                payload:shoppingCart
+            })
         }
-        
-        setCategoryIds(inTheState);
-        if(inTheState.length > 0){
-            fetchProducts({category:inTheState});
-        }else{
-            loadAllProducts();
-        }
-       
     }
-
-    
-    useEffect(()=>{
-        console.log('setstar',star);
-        fetchProducts({stars:star})
-    },[star])
-    //5.Show products by star ratings
-    const handleStarClick=(num)=>{
-        dispatch({
-            type:'SEARCH_QUERY',
-            payload:{text:""}
-        })
-
-        setPriceRange({min:0,max:0});
-        setCategoryIds([]);
-        setStar(num);
-       
-    }
-
 
     return(
         <>
-            <Nav />
-           
-            <div className="search-container">
-                <div className="search-sidebar">
-                    <div className="price-range">
-                        <h3>Price Range</h3>
-                    <Slider priceRange={priceRange} setPriceRange={setPriceRange} handleSlider={handleSlider}/>
-                    </div>
-                    <hr/>
-                    <div className="search-categories">
-                    <h3>Categories</h3>
-                    {categories && categories.map((c)=>{
-                        return(
-                            <div className="checkbox-div shop-checkbox" key={c._id}>
-         
-                            <input type="checkbox" 
-                                id="aaa" 
-                                value={c._id} 
-                                onClick={handleCheck}
-                                checked={categoryIds.includes(c._id)}
-                            />
-                            <label htmlFor="aaa">{c.name}</label>
-                        </div>
+        
+            <Nav/>
+            <div className="cart-container">
+                <div className="cart-table-container">
+                    <h3>Your Cart Items : {cart.length}</h3>
+                    {cart.length > 0 ? ( 
+                        <table className="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Brand</th>
+                                <th>Color</th>
+                                <th>Count</th>
+                                <th>Shipping</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {cart.map((c,i)=>(
+                            <tr key={i}>
+                                {/* <td><img className="cart-table-img" src={c.images[0].url}/></td> */}
+                                <td>
+                                <div className="cart-table-img">
+                                        {c.images.length ? (<ModalImage small={c.images[0].url} large={c.images[0].url} />)
+                                        :
+                                        (<ModalImage small={DefaultImage} large={DefaultImage} />)}
+                                    </div>
+                                </td>
+                                <td>{c.title}</td>
+                                <td>${c.price}</td>
+                                <td>{c.brand}</td>
+                                <td>{c.color}</td>
+                                <td><input className="cart-item-count" type="number" value={c.count} onChange={handleCount}/></td>
+                                <td>{c.shipping}</td>
+                                <td><i class="fas fa-times"></i></td>
+                            </tr>
+                        ))
+                        }   
                         
-                        )
                         
-                    })}
-                        
-                    </div>
-                    <hr/>
-                    <div className="star-search-container">
-                        <h3>Ratings</h3>
-                        <div className="star-search">
-                            <StarSearch numberOfStars={5} starClick={handleStarClick} />
-                            <StarSearch numberOfStars={4} starClick={handleStarClick} />
-                            <StarSearch numberOfStars={3} starClick={handleStarClick} />
-                            <StarSearch numberOfStars={2} starClick={handleStarClick} />
-                            <StarSearch numberOfStars={1} starClick={handleStarClick} />
-                        </div>
-                        
-                    </div>
-                </div>
-                <div className="homepage-top-container main-shop-content">
-                {products.length<1 && <p>No Products Found</p>}
-                {products && products.length > 0 && products.map((product)=>(
-                    <HomeTopProductCard key={product._id} product={product} loading={loading} />
-                ))}
-                </div>
+                        </tbody>
+                    
+                    </table>
+                    
+                    ) :(
+                        <Link to="/shop">Continue Shopping...</Link>
+                    )}
+                    
             </div>
-            
-            
+            <div className="order-summary">
+                     
+                    <h3>Order Summary</h3>
+                    <table className="order-summary-table">
+                        <thead>
+                            <tr>
+                                <th>Product Title</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        {cart.map((c,i)=>(
+                        <tr key={i}>
+                                <td>{c.title.substring(0,15)} </td>
+                                <td>{c.count}</td>
+                                <td>${c.count * c.price}</td>
+                        </tr>
+                    
+                    ))}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td className="right"></td>
+                            <td className="right total">Total:</td>
+                            <td className="right">${getTotal()}</td>
+                            
+                        </tr>
+                    </tfoot>
+                    
+                    </table>
+                        
+                        
+                            {user ? (
+                                <button 
+                                    onClick={saveOrderToDb} 
+                                    disabled={cart.length < 1} 
+                                    className= {cart.length > 0 ? ("btn-checkout"):( "btn-checkout-off")} 
+                                >
+                                    Proceed to Checkout
+                                </button>
+                            )
+                            :
+                            (
+                                <button className="btn-checkout">
+                                <Link 
+                                    to={{
+                                        pathname:"/login",
+                                        state:{from:"cart"}
+                                        }}
+                                    
+                                >
+                                Login to Checkout</Link></button>
+                            )
+                            }
+                        
+                        
+                         
+                     
+                 </div>      
+            </div>
+           
         </>
+        
     )
 }
 
-export default Shop;
+export default Cart;

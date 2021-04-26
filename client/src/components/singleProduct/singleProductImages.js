@@ -13,6 +13,7 @@ const SingleProductImages=({product,onStarClick,star})=>{
     const [tooltip,setTooltip]=useState('Add to Cart');
     const [selected ,setSelected]=useState('');
     const [showStar, setShowStar]=useState(true);
+    const [itemCount,setItemCount]=useState(1);
 
     const {title,images,category,price,_id}=product;
     
@@ -59,7 +60,7 @@ const SingleProductImages=({product,onStarClick,star})=>{
             //push new product to cart
             cart.push({
                 ...product,
-                count:1
+                count:itemCount
             })
 
             //remove duplicates
@@ -73,6 +74,11 @@ const SingleProductImages=({product,onStarClick,star})=>{
                 payload:unique
             })
         }
+    }
+
+    const changeItemCount=(e)=>{
+        //console.log('changeitemcount',e.target.value);
+        setItemCount(e.target.value);
     }
 
     return(
@@ -110,7 +116,7 @@ const SingleProductImages=({product,onStarClick,star})=>{
                         
                         <h4>${price}</h4>
                         <h4>Available Stock:</h4>
-                        <input type="number" />
+                        <input type="number" onChange={changeItemCount} value={itemCount}/>
                        <Tippy content={tooltip}><a onClick={handleAddToCart} className="btn">Add to Card</a></Tippy> 
                         <div onClick={showRatingDiv} className={showStar ? "user-rating" :"star-rating"}><i className="far fa-star"/>{" "}Leave a Rating</div>
                         <div  className={showStar ? "star-rating ":"show-star-rating star"}>

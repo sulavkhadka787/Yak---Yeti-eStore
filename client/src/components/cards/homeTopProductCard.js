@@ -6,6 +6,7 @@ import {showAverage} from '../../functions/rating';
 import _ from 'lodash';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import {toast} from 'react-toastify';
 
 
 const HomeTopProductCard=({product})=>{
@@ -40,6 +41,7 @@ const HomeTopProductCard=({product})=>{
                 type:'ADD_TO_CART',
                 payload:unique
             })
+            toast.success('Added to Cart');
         }
     }
     
