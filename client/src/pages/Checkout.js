@@ -1,13 +1,18 @@
 import React, { useEffect,useState } from 'react';
 import {useSelector,useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Nav from '../components/nav';
-import {getUserCart} from '../functions/user';
+import {getUserCart,emptyUserCart,saveUserAddress} from '../functions/user';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const Checkout=()=>{
 
     const [products,setProducts]=useState([]);
     const [total,setTotal]=useState(0);
+    const [address,setAddress]=useState("");
+    const [addressSaved,setAddressSaved]=useState(false);
 
     const {cart,user}=useSelector((state)=>({...state}));
     const dispatch=useDispatch();
@@ -23,13 +28,35 @@ const Checkout=()=>{
 
 
     const saveAddressToDb=()=>{
-        //
+        //console.log(address);
+        saveUserAddress(user.token,address).then(res=>{
+            if(res.data.ok){
+                setAddressSaved(true);
+            }
+        })
     }
 
-    const saveOrderToDb=()=>{
-        //
-    }
+    const emptyCart=()=>{
+        //remove from local storage
+        if(typeof window !=="undefined"){
+            localStorage.removeItem("cart");
+        }
 
+        //remove from redux
+        dispatch({
+            type:'ADD_TO_CART',
+            payload:[]
+        })
+
+        //remove from backend
+        emptyUserCart(user.token).then((res)=>{
+            setProducts([]);
+            setTotal(0);
+            toast.error("Cart is empty..Continue Shopping");
+        })
+
+    }
+    
     
 
     const getTotal=()=>{
@@ -42,9 +69,10 @@ const Checkout=()=>{
         <>
         <Nav/>
             <div className="cart-container">
-                <div>
-                {JSON.stringify(products)}
-                    <button onClick={saveAddressToDb}>Save address to db</button>
+                <div className="cart-table-container react-quill-container">
+                <h3>Delivery Address</h3>
+                    <ReactQuill theme="snow" value={address} onChange={setAddress} />
+                    <button className="btn-save-to-db btn-checkout" onClick={saveAddressToDb}>Save address to db</button>
                 </div>
             <div className="order-summary">
                      
@@ -83,14 +111,16 @@ const Checkout=()=>{
                             {user ? (
                                 <>
                                 <button 
-                                    onClick={saveOrderToDb} 
-                                    disabled={cart.length < 1} 
-                                    className= {cart.length > 0 ? ("btn-checkout"):( "btn-checkout-off")} 
+                                
+                                    disabled={!addressSaved || !products.length} 
+                                    className= {addressSaved && products.length ? ("btn-checkout"):( "btn-checkout-off")} 
                                 >
-                                    Proceed to Checkout
+                                    Place Order
                                 </button>
 
-                                <a>Empty Cart </a>
+                                <button 
+                                    disabled={!products.length}
+                                    onClick={emptyCart} className="empty-cart">Empty Cart </button>
                                 </>
                             )
                             :

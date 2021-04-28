@@ -998,6 +998,7 @@ a:hover{
    border:1px dotted #16222A;
     flex:2;
     margin-right:40px;
+    margin-top:20px;
     
 }
 
@@ -1027,17 +1028,20 @@ a:hover{
 .btn-checkout{
    cursor:pointer;
    padding:10px;
-   margin:5px auto;
-   right:1%;
+   margin:5px 10px;
    background:linear-gradient(#16222A,#2376ae);
    color:white;
-    border-radius: 10px;
-    width:100%;
+   border-radius: 10px;
+   width:95%;
 }
 
 .btn-checkout a{
     text-decoration: none;
     color:white;
+}
+
+.btn-checkout:hover{
+    color:skyblue;
 }
 .btn-checkout-off{
     border:none;
@@ -1107,6 +1111,31 @@ a:hover{
 .fa-times:hover{
     font-size:20px;
     color:red;
+}
+
+.empty-cart{
+    text-decoration: none;
+    color:green;
+    padding:5px;
+    border:1px solid black;
+    background: whitesmoke;
+    border-radius: 5px;
+    margin:auto 40%;
+    cursor: pointer;
+}
+
+.empty-cart:hover{
+    background: red;
+    color:white;
+}
+
+.react-quill-container{
+    margin:10px 20px;
+}
+
+.btn-save-to-db{
+    width:50%;
+    margin:10px 25%;
 }
 
 /* ===footer=== */

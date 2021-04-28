@@ -25,8 +25,8 @@ exports.userCart=async(req,res)=>{
         object.count=cart[i].count;
 
         //get price for creating total
-        let {price}=await Product.findById(cart[i]._id).select("price").exec();
-        object.price=price;
+        let productFromDb=await Product.findById(cart[i]._id).select("price").exec();
+        object.price=productFromDb.price;
         products.push(object);
 
         console.log('CART-PROUDCTS',products);
@@ -59,4 +59,20 @@ exports.getUserCart=async(req,res)=>{
 
     const {products,cartTotal}=cart;
     res.json({products,cartTotal});
+}
+
+exports.emptyCart=async(req,res)=>{
+    const user=await User.findOne({email:req.user.email}).exec();
+
+    const cart=await Cart.findOneAndRemove({orderedBy:user._id}).exec();
+    res.json(cart);
+}
+
+exports.saveAddress=async(req,res)=>{
+    const user=await User.findOneAndUpdate(
+        {email:req.user.email},
+        {address:req.body.address}
+    ).exec();
+
+    res.json({ok:true})
 }
