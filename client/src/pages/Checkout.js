@@ -7,7 +7,7 @@ import {getUserCart,emptyUserCart,saveUserAddress} from '../functions/user';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const Checkout=()=>{
+const Checkout=({history})=>{
 
     const [products,setProducts]=useState([]);
     const [total,setTotal]=useState(0);
@@ -114,6 +114,7 @@ const Checkout=()=>{
                                 
                                     disabled={!addressSaved || !products.length} 
                                     className= {addressSaved && products.length ? ("btn-checkout"):( "btn-checkout-off")} 
+                                    onClick={()=>history.push('/payment')}
                                 >
                                     Place Order
                                 </button>
