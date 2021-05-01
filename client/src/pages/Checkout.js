@@ -29,6 +29,10 @@ const Checkout=({history})=>{
 
     const saveAddressToDb=()=>{
         //console.log(address);
+        if(!address){
+            toast.error('Address cannot be empty');
+            return;
+        }
         saveUserAddress(user.token,address).then(res=>{
             if(res.data.ok){
                 setAddressSaved(true);

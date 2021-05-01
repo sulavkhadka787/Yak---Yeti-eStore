@@ -9,8 +9,8 @@ const promise=loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 const Payment=()=>{
     return(
-        <div>
-            <h4>Complete your purchase</h4>
+        <div className="stripe-window">
+            
             <Elements stripe={promise}>
                 <StripeCheckout />
             </Elements>
