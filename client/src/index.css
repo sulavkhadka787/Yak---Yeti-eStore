@@ -1184,6 +1184,15 @@ a:hover{
     border-radius: 5px;
 }
 
+.loading-spinner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fa-spinner{
+    font-size:60px;
+}
 /* ===footer=== */
 .footer{
     
