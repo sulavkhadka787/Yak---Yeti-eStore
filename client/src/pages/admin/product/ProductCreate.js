@@ -111,7 +111,7 @@ const ProductCreate=()=>{
 
     return(
         <>
-             {JSON.stringify(values.subs)}
+             
             <div className="admin-container">
                 <div >
                     <AdminNav/> 

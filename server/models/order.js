@@ -19,7 +19,7 @@ const orderSchema=mongoose.Schema({
         default:'Not Processed',
         enum:[
             "Not Processed",
-            "processing",
+            "Processing",
             "Dispatched",
             "Cancelled",
             "Completed"

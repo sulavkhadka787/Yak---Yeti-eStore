@@ -474,7 +474,14 @@ a:hover{
     flex-wrap: wrap;
 }
 
-
+.textarea-product{
+    width:50%;
+    margin:10px auto;
+    border-radius: 10px;
+    outline: none;
+    padding:10px;
+    
+}
 .images-div{
     padding:5px 5px 10px;
     width:15%;
@@ -1169,6 +1176,14 @@ a:hover{
     padding:2px;
 }
 
+.delivery-status-div{
+    padding:10px;
+}
+.status-select{
+    padding:5px;
+    border-radius: 5px;
+}
+
 /* ===footer=== */
 .footer{
     
@@ -1289,6 +1304,10 @@ a:hover{
         width:90%;
     }
 
+    .textarea-product{
+        width:98%;
+        margin:0;
+    }
     .main-content-product-list{
         flex-direction: column;
         width:100%;

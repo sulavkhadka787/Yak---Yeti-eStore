@@ -5,6 +5,7 @@ import axios from 'axios';
 import {useSelector} from 'react-redux';
 import {toast} from 'react-toastify';
 
+
 const ProductCreateForm=({handleChange,
     handleSubmit,
     handleCategoryChange,
@@ -140,14 +141,23 @@ const ProductCreateForm=({handleChange,
                     </div>
 
                     <div>
-                        
-                        <input 
+                    <textarea  
+                        name="description" 
+                        placeholder={'Product description'} 
+                        value={description} 
+                        rows="4" 
+                        cols="50" 
+                        className="textarea-product"
+                    />
+  
+                    
+                        {/* <input 
                             type="text" 
                             name="description"
                             value={description}
                             placeholder="Product Description"
                             onChange={handleChange}
-                        />
+                        /> */}
                     </div>
                     <div>
                         <select name="category" onChange={handleCategoryChange} className="cat-select">

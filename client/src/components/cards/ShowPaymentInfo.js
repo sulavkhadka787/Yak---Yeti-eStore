@@ -1,7 +1,11 @@
 import React from 'react';
+import { userCart } from '../../functions/user';
+import {useSelector} from 'react-redux';
 
 
 const ShowPaymentInfo=({order})=>{
+
+    const {user}=useSelector((state)=>({...state}));
     console.log('order',order);
     return(
      <div>
@@ -13,8 +17,16 @@ const ShowPaymentInfo=({order})=>{
          <p>Payment method:{" "}
             <strong>{order.paymentIntent.payment_method_types[0]}</strong>
              ==== 
-             Payment Status:{" "}<span className="order-status-span"><strong>{order.paymentIntent.status==='succeeded' && 'Complete'}
-             </strong></span>
+             {user.role==='user' ? (
+                <>Payment Status:{" "}<span className="order-status-span"><strong>{order.paymentIntent.status==='succeeded' && 'Complete'}
+              </strong></span></>
+             )
+             :
+             (
+                <>Payment Status:{" "}<span className="order-status-span"><strong>{order.orderStatus}</strong></span></>
+             )
+             }
+             
         </p>
         <p>Order Date[mm/dd/yy]:{new Date (order.paymentIntent.created *1000).toLocaleString()}</p>
      </div>
