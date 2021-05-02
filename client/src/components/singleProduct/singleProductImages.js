@@ -115,7 +115,7 @@ const SingleProductImages=({product,onStarClick,star})=>{
                         <h2>Category:{category && category.name}</h2>
                         
                         <h4>${price}</h4>
-                        <h4>Available Stock:</h4>
+                        <h4>Available Stock : {product.quantity}</h4>
                         <input type="number" onChange={changeItemCount} value={itemCount}/>
                        <Tippy content={tooltip}><a onClick={handleAddToCart} className="btn">Add to Card</a></Tippy> 
                         <div onClick={showRatingDiv} className={showStar ? "user-rating" :"star-rating"}><i className="far fa-star"/>{" "}Leave a Rating</div>

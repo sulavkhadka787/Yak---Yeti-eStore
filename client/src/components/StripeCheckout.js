@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useSelector, useDispatch } from "react-redux";
 import { createPaymentIntent } from "../functions/stripe";
+import {createOrder,emptyUserCart} from '../functions/user';
 import {Link} from 'react-router-dom';
 
 const StripeCheckout = ({ history }) => {
@@ -44,6 +45,24 @@ const StripeCheckout = ({ history }) => {
         setError(`Payment failed ${payload.error.message}`)
         setProcessing(false);
       }else{
+
+        createOrder(payload,user.token).then((res)=>{
+          console.log('stripe-order-create-order',res.data);
+          if(res.data.ok){
+            //empty cart from localstorage
+            if(typeof window !=='undefined'){
+              localStorage.removeItem("cart");
+            }
+            //empty cart from redux
+            dispatch({
+              type:'ADD_TO_CART',
+              payload:[]
+            })
+
+            //empty cart from database
+            emptyUserCart(user.token);
+          }
+        })
         console.log('stripe-payload',JSON.stringify(payload,null,4));
         setError(null);
         setProcessing(false);
@@ -79,7 +98,7 @@ const StripeCheckout = ({ history }) => {
 
   return (
     <>
-    {succeeded ? (<h4>Payment Complete</h4>) : (<h4>Complete your purchase</h4>)}
+    {succeeded ? (<h4>Payment Complete</h4>) : (<h4>Complete your purchase with STRIPE</h4>)}
     <p>Total:${cartTotal}</p>
       <form id="payment-form" className="stripe-form" onSubmit={handleSubmit}>
         <CardElement

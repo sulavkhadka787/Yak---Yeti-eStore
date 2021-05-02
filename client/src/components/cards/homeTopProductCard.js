@@ -60,7 +60,18 @@ const HomeTopProductCard=({product})=>{
                    ? showAverage(product)
                     : <p className="no-ratings-text"><strong>No Ratings Yet</strong></p>
                    }
-                    <Tippy content={tooltip}><a onClick={handleAddToCart}><i className="fas fa-shopping-cart"></i></a></Tippy>
+                    <Tippy content={tooltip}>
+                        <a className={product.quantity < 1 ? "disabled-link" : ""} onClick={handleAddToCart}>
+                        {product.quantity > 0 
+                        ?
+                        (<i className="fas fa-shopping-cart"></i>)
+                        :
+                        ( <i class="fas fa-ban"></i>)
+                        }
+                        
+                       
+                        </a>
+                        </Tippy>
                 </div>
                 </div>
                 
