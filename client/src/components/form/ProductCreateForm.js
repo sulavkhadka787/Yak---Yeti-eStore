@@ -147,6 +147,7 @@ const ProductCreateForm=({handleChange,
                         value={description} 
                         rows="4" 
                         cols="50" 
+                        onChange={handleChange}
                         className="textarea-product"
                     />
   
