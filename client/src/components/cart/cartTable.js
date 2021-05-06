@@ -10,7 +10,7 @@ const CartTable=({c})=>{
 
     const handleCount=(e)=>{
         //console.log('product-stock',c.quantity);
-        let count=e.target.value <1 ? 1 :e.target.value
+        let count=e.target.value <1 ? 0 :e.target.value
         if(count > c.quantity){
             toast.error(`Total items in stock: ${c.quantity}`);
             return;

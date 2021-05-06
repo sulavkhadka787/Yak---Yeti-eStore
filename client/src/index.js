@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom';
+import HttpsRedirect from 'react-https-redirect';
 
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
@@ -15,7 +16,10 @@ const store=createStore(rootReducer,composeWithDevTools());
 ReactDOM.render(
   <Provider store={store}>
       <BrowserRouter>
-        <App />
+      <HttpsRedirect>
+          <App />
+      </HttpsRedirect>
+        
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')

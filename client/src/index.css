@@ -455,7 +455,7 @@ a:hover{
     border-radius: 10px;
 }
 .checkbox-div {
-    width:50%;
+    width:80%;
 }
 
 .checkbox-div input{
@@ -1376,8 +1376,16 @@ a:hover{
         margin:10px 0 0 10px;
     }
 
+    
+
+    .test{
+        width:100%;
+    }
+
     .column-top-images{
-        padding-right: 10px;
+        /* padding-right: 10px; */
+        width:100%;
+        margin-left:20px;
     }
 
     .paginationBttns{

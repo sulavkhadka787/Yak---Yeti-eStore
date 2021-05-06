@@ -8,6 +8,7 @@ import Nav from '../components/nav';
 import PriceSlider from '../components/PriceSlider';
 import StarSearch from '../components/StarSearch';
 
+
 const Shop=()=>{
 
     const [products,setProducts]=useState([]);
@@ -28,6 +29,7 @@ const Shop=()=>{
     const dispatch=useDispatch();
 
     useEffect(()=>{
+       
         console.log('!shopage-loadall triggered');
         loadAllProducts();
         getCategories().then(res=>setCategories(res.data));
@@ -76,6 +78,7 @@ const Shop=()=>{
     },[ok]);
 
     const handleslider=(range)=>{
+        console.log('range-rang',range);
         dispatch({
             type:'SEARCH_QUERY',
             payload:{text:''}
@@ -187,6 +190,8 @@ const Shop=()=>{
                     <div className="price-range">
                         <h3>Price Range</h3>
                         <PriceSlider priceRange={priceRange} setPriceRange={setPriceRange} handleslider={handleslider} />
+                        
+                       
                     </div>  
                     <hr className="hr"/>  
                     <div className="search-categories">

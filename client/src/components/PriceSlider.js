@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState}from 'react';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 
@@ -15,7 +15,8 @@ const PriceSlider=({priceRange,handleslider})=>{
             formatLabel={value => `$${value}`}
             onChange={handleslider}
        />
-        </>
+
+       </>
     )
 
     
