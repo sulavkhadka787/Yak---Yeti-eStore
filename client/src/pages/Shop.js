@@ -74,23 +74,23 @@ const Shop=()=>{
 
     useEffect(()=>{
        
-        fetchProducts({price:[0,priceRange]})
+        fetchProducts({price:[parseInt(priceRange.min),parseInt(priceRange.max)]})
     },[ok]);
 
-    const handleslider=(range)=>{
-        console.log('range-rang',range);
-        dispatch({
-            type:'SEARCH_QUERY',
-            payload:{text:''}
-        })
-        setPriceRange(range);
-        setStar('');
-        setSub('');
-        setShipping('');
-        setTimeout(()=>{
-            setOk(!ok);
-        },300);
-    }
+    // const handleslider=(range)=>{
+    //     console.log('range-rang',range);
+    //     dispatch({
+    //         type:'SEARCH_QUERY',
+    //         payload:{text:''}
+    //     })
+    //     setPriceRange(range);
+    //     setStar('');
+    //     setSub('');
+    //     setShipping('');
+    //     setTimeout(()=>{
+    //         setOk(!ok);
+    //     },300);
+    // }
 
     //4.load prouducts by category
     const handleCheck=(e)=>{
@@ -189,9 +189,17 @@ const Shop=()=>{
                     <h3>Search/Filter</h3>
                     <div className="price-range">
                         <h3>Price Range</h3>
-                        <PriceSlider priceRange={priceRange} setPriceRange={setPriceRange} handleslider={handleslider} />
-                        
-                       
+                        <PriceSlider 
+                            priceRange={priceRange} 
+                            setPriceRange={setPriceRange}
+                           
+                            setStar={setStar}
+                            setSub={setSub}
+                            setShipping={setShipping}
+                            setOk={setOk}
+                            ok={ok}
+                            />
+                     
                     </div>  
                     <hr className="hr"/>  
                     <div className="search-categories">
