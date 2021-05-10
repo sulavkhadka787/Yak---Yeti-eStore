@@ -37,6 +37,7 @@ This project is divided into two separate folders, 'client' folder for frontend 
 * REACT 
 * REDUX
 * firebase
+* react-paginate
 * react-star-ratings
 * react-toastify
 * redux-devtools-extension
